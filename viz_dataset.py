@@ -3,7 +3,7 @@
 import argparse
 import os
 import matplotlib
-matplotlib.use("Agg")  # noqa
+#matplotlib.use("Agg")  # noqa
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as PathEffects
 import numpy as np
@@ -19,6 +19,9 @@ BBOXES = {
     "earthquakes_jp": (123.43, 149.18, 25.41, 45.98),
     "pinwheel": (-4.0, 4.0, -4.0, 4.0),
     "fmri": (0.0, 106.0, 0.0, 106.0),
+    "waldo": (-10.0, 1010.0, -10.0, 810.0),
+    "waldo_short": (-10.0, 1010.0, -10.0, 810.0),
+    "waldo_shorter": (-10.0, 1010.0, -10.0, 810.0)
 }
 
 MAPS = {
@@ -28,6 +31,9 @@ MAPS = {
     "pinwheel": None,
     "fmri": None,
     "gmm": None,
+    "waldo": None,
+    "waldo_short": None,
+    "waldo_shorter": None
 }
 
 FIGSIZE = 10
@@ -166,6 +172,12 @@ def load_data(data, split="train"):
         return toy_datasets.GMMHawkes(split=split)
     elif data == "fmri":
         return datasets.BOLD5000(split=split)
+    elif data == "waldo":
+        return datasets.EyeTracking(split=split)
+    elif data == "waldo_short":
+        return datasets.EyeTrackingShort(split=split)
+    elif data == "waldo_shorter":
+        return datasets.EyeTrackingShorter(split=split)
     else:
         raise ValueError(f"Unknown data option {data}")
 

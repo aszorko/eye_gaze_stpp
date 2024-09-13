@@ -120,6 +120,66 @@ class Earthquakes(SpatioTemporalDataset):
     def extra_repr(self):
         return f"Split: {self.split}"
 
+class EyeTracking(SpatioTemporalDataset):
+
+    def __init__(self, split="train"):
+        assert split in ["train", "val", "test", "all"]
+        self.split = split
+        dataset = np.load("data/waldo/stpp_auto.npz")
+        exclude_from_train = (dataset.files[0::5] + dataset.files[1::5])
+        val_files = dataset.files[0::5]
+        test_files = dataset.files[1::5]
+        train_files = set(dataset.files).difference(exclude_from_train)
+        all_files = dataset.files #for parametric model only
+        file_splits = {"train": train_files, "val": val_files, "test": test_files, "all": all_files}
+        train_set = [dataset[f] for f in train_files]
+        split_set = [dataset[f] for f in file_splits[split]]
+        self.IDs = [f for f in file_splits[split]]
+        super().__init__(train_set, split_set, split == "train")
+
+    def extra_repr(self):
+        return f"Split: {self.split}"
+
+
+class EyeTrackingShort(SpatioTemporalDataset):
+
+    def __init__(self, split="train"):
+        assert split in ["train", "val", "test"]
+        self.split = split
+        dataset = np.load("data/waldo/stpp_auto_6seg.npz")
+        exclude_from_train = (dataset.files[0::7] + dataset.files[1::7])
+        val_files = dataset.files[0::7]
+        test_files = dataset.files[1::7]
+        train_files = set(dataset.files).difference(exclude_from_train)
+        file_splits = {"train": train_files, "val": val_files, "test": test_files}
+        train_set = [dataset[f] for f in train_files]
+        split_set = [dataset[f] for f in file_splits[split]]
+        self.IDs = [f for f in file_splits[split]]
+        super().__init__(train_set, split_set, split == "train")
+
+    def extra_repr(self):
+        return f"Split: {self.split}"
+
+
+class EyeTrackingShorter(SpatioTemporalDataset):
+
+    def __init__(self, split="train"):
+        assert split in ["train", "val", "test"]
+        self.split = split
+        dataset = np.load("data/waldo/stpp_auto_12seg.npz")
+        exclude_from_train = (dataset.files[0::7] + dataset.files[1::7])
+        val_files = dataset.files[0::7]
+        test_files = dataset.files[1::7]
+        train_files = set(dataset.files).difference(exclude_from_train)
+        file_splits = {"train": train_files, "val": val_files, "test": test_files}
+        train_set = [dataset[f] for f in train_files]
+        split_set = [dataset[f] for f in file_splits[split]]
+        self.IDs = [f for f in file_splits[split]]
+        super().__init__(train_set, split_set, split == "train")
+
+    def extra_repr(self):
+        return f"Split: {self.split}"
+
 
 class BOLD5000(SpatioTemporalDataset):
 
