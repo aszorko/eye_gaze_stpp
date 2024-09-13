@@ -673,7 +673,11 @@ if __name__ == '__main__':
     - n_candidates: set to zero if you only want predictors for real data points
     - data_ids: set to None if participant info not needed in dataset
       otherwise, this is a tuple of (dataset name string, list of ID strings)
-      and a parser should be added to the function add_ID_cols
+      if using .npz file: data_ids = ('my_data',data_npz.files)
+      A parser should then be added to the function add_ID_cols.
+      minimal example:
+          if dataset=="my_data":
+              pred_df["SeqID"] = testID
     """
     
     ### SELECT DATASET BELOW    
