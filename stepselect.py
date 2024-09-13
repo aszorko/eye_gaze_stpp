@@ -6,26 +6,23 @@ Created on Tue Apr 16 13:17:35 2024
 """
 
 from abc import abstractmethod
-import psutil
-import argparse
-import itertools
-import datetime
-import math
 import numpy as np
 import os
 import sys
-import time
 import pandas as pd
 import warnings
-import torch
-from viz_dataset import load_data
 import matplotlib.pyplot as plt
 from bentley_ottmann.planar import segments_intersect
 from ground.base import get_context
-import model_init
-from train_stpp import cast
 from scipy.ndimage import gaussian_filter
 
+#below only needed for waldo data
+from viz_dataset import load_data
+
+#below only needed for NN model
+import torch
+from train_stpp import cast
+import model_init
 
 class MarkovModel:
     def __init__(self,cond_dist,seed=222,predname="markov"):
@@ -678,6 +675,7 @@ if __name__ == '__main__':
       minimal example:
           if dataset=="my_data":
               pred_df["SeqID"] = testID
+    - models: a list of instantiated predictive models
     """
     
     ### SELECT DATASET BELOW    
